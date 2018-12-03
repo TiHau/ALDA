@@ -125,7 +125,7 @@ public class StrongComponents<V> {
 	}
 	
 	private static void test2() throws FileNotFoundException {
-		DirectedGraph<Integer> g = readDirectedGraph(new File("src/mediumDG.txt"));
+		DirectedGraph<Integer> g = readDirectedGraph(new File("A2/src/mediumDG.txt"));
 		System.out.println(g.getNumberOfVertexes());
 		System.out.println(g.getNumberOfEdges());
 		System.out.println(g);
