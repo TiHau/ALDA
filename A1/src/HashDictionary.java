@@ -14,6 +14,12 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
         cap = DEF_CAP;
     }
 
+    public HashDictionary(int cap) {
+        data = new LinkedList[cap];
+        size = 0;
+        this.cap = cap;
+    }
+
     @Override
     public V insert(K key, V value) {
         int hash = hash(key);
