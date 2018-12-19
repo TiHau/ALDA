@@ -76,6 +76,8 @@ public class ShortestPath<V> {
 			else
 				current = dist.entrySet().stream().filter(x -> kl.contains(x.getKey())).min(Comparator.comparingDouble(x -> (x.getValue()+heuristic.estimatedCost(x.getKey(), g)))).get().getKey();
 
+			//System.out.println("Visited: "+ current + " d = " + dist.get(current));
+
             kl.remove(current);
 
             if (heuristic != null && current.equals(destVertex))

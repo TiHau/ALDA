@@ -56,7 +56,8 @@ public class ScotlandYard {
                     weight = 3;
                     break;
                 default:
-                    weight = 1;
+                    System.out.println("failed read");
+                    weight = 100;
             }
 
             sy_graph.addEdge(first, second, weight);
@@ -94,22 +95,22 @@ public class ScotlandYard {
 
         DirectedGraph<Integer> syGraph = getGraph();
 
-        //Heuristic<Integer> syHeuristic = null; // Dijkstra
-        Heuristic<Integer> syHeuristic = getHeuristic(); // A*
+        Heuristic<Integer> syHeuristic = null; // Dijkstra
+        //Heuristic<Integer> syHeuristic = getHeuristic(); // A*
 
         //System.out.println(syGraph.getWeight(78, 79));
         //System.out.println(syGraph.getWeight(65, 82));
 
         ShortestPath<Integer> sySp = new ShortestPath<Integer>(syGraph, syHeuristic);
 
-//        sySp.searchShortestPath(65, 157);
-//        System.out.println("Distance = " + sySp.getDistance()); // 9.0
-//
-//        sySp.searchShortestPath(1, 175);
-//        System.out.println("Distance = " + sySp.getDistance()); // 25.0
-//
-//        sySp.searchShortestPath(1, 173);
-//        System.out.println("Distance = " + sySp.getDistance()); // 22.0
+        sySp.searchShortestPath(65, 157);
+        System.out.println("Distance = " + sySp.getDistance()); // 9.0
+
+        sySp.searchShortestPath(1, 175);
+        System.out.println("Distance = " + sySp.getDistance()); // 25.0
+
+        sySp.searchShortestPath(1, 173);
+        System.out.println("Distance = " + sySp.getDistance()); // 22.0
 
 
         SYSimulation sim;
@@ -141,8 +142,6 @@ public class ScotlandYard {
         }
 
         sim.stopSequence();
-
-
     }
 
 }
@@ -175,7 +174,7 @@ class ScotlandYardHeuristic implements Heuristic<Integer> {
         if (this.coord.get(u) != null && this.coord.get(v) != null) {
             double x = Math.pow((this.coord.get(v).x - this.coord.get(u).x), 2.0);
             double y = Math.pow((this.coord.get(v).y - this.coord.get(u).y), 2.0);
-            return (1.0 / 30) * Math.sqrt(x + y);
+            return (1.0 / 50) * Math.sqrt(x + y);
         }
         return 0;
     }
