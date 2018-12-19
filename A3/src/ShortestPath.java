@@ -1,11 +1,6 @@
-// O. Bittel;
-// 18.10.2011
-
-package shortestPath;
-
-import graph.*;
 import sim.SYSimulation;
-// ...
+
+import java.util.*;
 
 /**
  * Kürzeste Wege in Graphen mit A*- und Dijkstra-Verfahren.
@@ -19,6 +14,9 @@ public class ShortestPath<V> {
 	
 	Map<V,Double> dist; // Distanz für jeden Knoten
 	Map<V,V> pred; // Vorgänger für jeden Knoten
+    DirectedGraph<V> graph;
+    Heuristic<V> heuristic;
+    V destVertex;
 	// ...
 
 	/**
@@ -30,7 +28,10 @@ public class ShortestPath<V> {
 	 * dem Dijkstra-Verfahren gesucht.
 	 */
 	public ShortestPath(DirectedGraph<V> g, Heuristic<V> h) {
-		// ...
+		dist = new HashMap<>();
+		pred = new HashMap<>();
+		graph = g;
+		heuristic = h;
 	}
 
 	/**
@@ -58,7 +59,41 @@ public class ShortestPath<V> {
 	 * @param g Zielknoten
 	 */
 	public void searchShortestPath(V s, V g) {
-		// ...
+        destVertex = g;
+        LinkedList<V> kl = new LinkedList<>();
+
+        for (V v : graph.getVertexSet()) {
+            dist.put(v,Double.POSITIVE_INFINITY);
+            pred.put(v,null);
+        }
+
+        kl.add(s);
+        dist.replace(s,0.0);
+
+        while (!kl.isEmpty()){
+			V current;
+			if(heuristic == null)
+            	current = dist.entrySet().stream().filter(x -> kl.contains(x.getKey())).min(Comparator.comparingDouble(Map.Entry::getValue)).get().getKey();
+			else
+				current = dist.entrySet().stream().filter(x -> kl.contains(x.getKey())).min(Comparator.comparingDouble(x -> (x.getValue()+heuristic.estimatedCost(x.getKey(), g)))).get().getKey();
+
+
+			System.out.println("Visited: " + current);
+
+            kl.remove(current);
+
+            if (heuristic != null && current.equals(destVertex))
+                return;
+
+            for (V v : graph.getSuccessorVertexSet(current)) {
+                if (dist.get(v) == Double.POSITIVE_INFINITY)
+                    kl.add(v);
+                if (dist.get(current) + graph.getWeight(current, v) < dist.get(v)){
+                    dist.replace(v, dist.get(current) + graph.getWeight(current, v));
+                    pred.replace(v,current);
+                }
+            }
+        }
 	}
 
 	/**
@@ -68,7 +103,16 @@ public class ShortestPath<V> {
 	 * @return kürzester Weg als Liste von Knoten.
 	 */
 	public List<V> getShortestPath() {
-		// ...
+        LinkedList<V> ret = new LinkedList<>();
+        V v = destVertex;
+        while (true) {
+			ret.add(v);
+            if(dist.get(ret.getLast()) == 0.0)
+                break;
+            v = pred.get(v);
+        }
+		Collections.reverse(ret);
+        return ret;
 	}
 
 	/**
@@ -78,7 +122,7 @@ public class ShortestPath<V> {
 	 * @return Länge eines kürzesten Weges.
 	 */
 	public double getDistance() {
-		// ...
+		return dist.get(destVertex);
 	}
 
 }

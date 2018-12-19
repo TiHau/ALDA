@@ -1,5 +1,3 @@
-package shortestPath;
-
 import graph.*;
 import java.io.FileNotFoundException;
 import sim.SYSimulation;
@@ -140,6 +138,7 @@ class ScotlandYardHeuristic implements Heuristic<Integer> {
 
 	public double estimatedCost(Integer u, Integer v) {
 		// ...
+		return 1.1;
 	}
 }
 

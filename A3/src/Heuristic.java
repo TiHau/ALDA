@@ -3,8 +3,6 @@
  * and open the template in the editor.
  */
 
-package shortestPath;
-
 /**
  * @author Oliver Bittel
  * @since 27.01.2015
