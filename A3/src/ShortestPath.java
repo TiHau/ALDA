@@ -17,7 +17,6 @@ public class ShortestPath<V> {
     DirectedGraph<V> graph;
     Heuristic<V> heuristic;
     V destVertex;
-	// ...
 
 	/**
 	 * Berechnet im Graph g kürzeste Wege nach dem A*-Verfahren.
@@ -76,9 +75,6 @@ public class ShortestPath<V> {
             	current = dist.entrySet().stream().filter(x -> kl.contains(x.getKey())).min(Comparator.comparingDouble(Map.Entry::getValue)).get().getKey();
 			else
 				current = dist.entrySet().stream().filter(x -> kl.contains(x.getKey())).min(Comparator.comparingDouble(x -> (x.getValue()+heuristic.estimatedCost(x.getKey(), g)))).get().getKey();
-
-
-			System.out.println("Visited: " + current);
 
             kl.remove(current);
 
