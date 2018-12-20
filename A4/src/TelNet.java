@@ -111,13 +111,13 @@ public class TelNet {
             in Eclipse etc. kann es normal ausgeführt werden.
             Daher die vermutung, dass IDEA falsch optimiert
          */
-        //doNetFromAbb3();
+        doNetFromAbb3();
         doRandomNet();
     }
 
     private static void doRandomNet(){
         int size = 1000;
-        TelNet rand = new TelNet(200);
+        TelNet rand = new TelNet(1000);
         rand.generateRandomTelNet(size,size,size);
         if (rand.computeOptTelNet()) {
             System.out.println("Abbildung 3 kosten: " + rand.getOptTelNetKosten());
@@ -128,7 +128,7 @@ public class TelNet {
     }
 
     private static void doNetFromAbb3() {
-        TelNet abb3 = new TelNet(7);
+        TelNet abb3 = new TelNet(50);
         abb3.addTelKnoten(1, 1);
         abb3.addTelKnoten(3, 1);
         abb3.addTelKnoten(4, 2);
