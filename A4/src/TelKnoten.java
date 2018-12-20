@@ -13,4 +13,9 @@ public class TelKnoten implements Comparable<TelKnoten> {
             return 0;
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Knoten("+x+"|"+y+")";
+    }
 }

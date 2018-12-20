@@ -44,15 +44,14 @@ public class TelNet {
                 union.union(t1, t2);
                 optimalesNetz.add(verbindung);
             }
-
-            if (edges.isEmpty() && union.size() != 1) {
-                optimalesNetz.clear();
-                return false;
-            } else
-                return true;
         }
 
-        return false;
+
+        if (edges.isEmpty() && union.size() != 1) {
+            optimalesNetz.clear();
+            return false;
+        }
+        return true;
     }
 
     public List<TelVerbindung> getOptTelNet() {
@@ -68,7 +67,7 @@ public class TelNet {
         StdDraw.setXscale();
         StdDraw.setYscale();
 
-        StdDraw.setCanvasSize(500, 500);
+        StdDraw.setCanvasSize(1000, 1000);
 
         StdDraw.setPenRadius(0.05);
         StdDraw.setPenColor(Color.BLUE);
@@ -79,8 +78,8 @@ public class TelNet {
         StdDraw.setPenRadius(0.005);
         StdDraw.setPenColor(Color.RED);
         optimalesNetz.forEach(i -> {
-            StdDraw.line(i.from.x/ (double)xMax, i.from.y / (double)yMax, i.from.x/ (double)xMax, i.to.y / (double)yMax);
-            StdDraw.line(i.from.x/ (double)xMax, i.to.y / (double)yMax, i.to.x/ (double)xMax, i.to.y / (double)yMax);
+            StdDraw.line(i.from.x / (double) xMax, i.from.y / (double) yMax, i.from.x / (double) xMax, i.to.y / (double) yMax);
+            StdDraw.line(i.from.x / (double) xMax, i.to.y / (double) yMax, i.to.x / (double) xMax, i.to.y / (double) yMax);
         });
 
 
@@ -108,7 +107,7 @@ public class TelNet {
     }
 
     public static void main(String[] args) {
-        TelNet abb3 = new TelNet(7);
+        TelNet abb3 = new TelNet(50);
         abb3.addTelKnoten(1, 1);
         abb3.addTelKnoten(3, 1);
         abb3.addTelKnoten(4, 2);
@@ -116,8 +115,17 @@ public class TelNet {
         abb3.addTelKnoten(7, 5);
         abb3.addTelKnoten(2, 6);
         abb3.addTelKnoten(4, 7);
-        abb3.computeOptTelNet();
-        System.out.println("Abbildung 3 kosten: " + abb3.getOptTelNetKosten());
-        abb3.drawOptTelNet(7, 7);
+        if (abb3.computeOptTelNet()) {
+            System.out.println("Abbildung 3 kosten: " + abb3.getOptTelNetKosten());
+            abb3.getOptTelNet().forEach(System.out::println);
+            abb3.drawOptTelNet(7, 7);
+        }
+        else
+            System.out.println("computeing failed");
+
+        /* Das Programm funktioniert nur im debug mode...
+            in Eclipse etc. kann es normal ausgeführt werden.
+            Daher die vermutung, dass IDEA falsch optimiert
+         */
     }
 }

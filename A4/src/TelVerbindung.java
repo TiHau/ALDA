@@ -3,12 +3,6 @@ public class TelVerbindung implements Comparable<TelVerbindung> {
     public final TelKnoten to;
     public final int dist;
 
-    public TelVerbindung(TelKnoten from, TelKnoten to, int dist) {
-        this.from = from;
-        this.to = to;
-        this.dist = dist;
-    }
-
     TelVerbindung(TelKnoten from, TelKnoten to) {
         this.from = from;
         this.to = to;
@@ -17,8 +11,15 @@ public class TelVerbindung implements Comparable<TelVerbindung> {
 
     @Override
     public int compareTo(TelVerbindung other) {
-        if (this.from.equals(other.from) && this.to.equals(other.to) && this.dist == other.dist)
+        if(this.dist>other.dist) return 1;
+        else if(this.dist == other.dist) {
             return 0;
-        return -1;
+        } else
+            return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Verbindung von " + from + " nach " + to + " dist: " + dist;
     }
 }
