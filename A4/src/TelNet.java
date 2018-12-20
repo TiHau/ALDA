@@ -15,7 +15,7 @@ public class TelNet {
 
     public boolean addTelKnoten(int x, int y) {
         TelKnoten telKnoten = new TelKnoten(x, y);
-        if (!knoten.keySet().contains(telKnoten)) {
+        if (!knoten.containsKey(telKnoten)) {
             this.knoten.put(new TelKnoten(x, y), knoten.size());
             return true;
         } else return false;
@@ -69,13 +69,13 @@ public class TelNet {
 
         StdDraw.setCanvasSize(1000, 1000);
 
-        StdDraw.setPenRadius(0.05);
+        StdDraw.setPenRadius(0.01);
         StdDraw.setPenColor(Color.BLUE);
         for (TelKnoten k : knoten.keySet()) {
             StdDraw.point((double) k.x / xMax, (double) k.y / yMax);
         }
 
-        StdDraw.setPenRadius(0.005);
+        StdDraw.setPenRadius(0.001);
         StdDraw.setPenColor(Color.RED);
         optimalesNetz.forEach(i -> {
             StdDraw.line(i.from.x / (double) xMax, i.from.y / (double) yMax, i.from.x / (double) xMax, i.to.y / (double) yMax);
@@ -107,7 +107,28 @@ public class TelNet {
     }
 
     public static void main(String[] args) {
-        TelNet abb3 = new TelNet(50);
+        /* Das Programm funktioniert nur im debug mode...
+            in Eclipse etc. kann es normal ausgeführt werden.
+            Daher die vermutung, dass IDEA falsch optimiert
+         */
+        //doNetFromAbb3();
+        doRandomNet();
+    }
+
+    private static void doRandomNet(){
+        int size = 1000;
+        TelNet rand = new TelNet(200);
+        rand.generateRandomTelNet(size,size,size);
+        if (rand.computeOptTelNet()) {
+            System.out.println("Abbildung 3 kosten: " + rand.getOptTelNetKosten());
+            rand.getOptTelNet().forEach(System.out::println);
+            rand.drawOptTelNet(size, size);
+        } else
+            System.out.println("computeing failed");
+    }
+
+    private static void doNetFromAbb3() {
+        TelNet abb3 = new TelNet(7);
         abb3.addTelKnoten(1, 1);
         abb3.addTelKnoten(3, 1);
         abb3.addTelKnoten(4, 2);
@@ -119,13 +140,7 @@ public class TelNet {
             System.out.println("Abbildung 3 kosten: " + abb3.getOptTelNetKosten());
             abb3.getOptTelNet().forEach(System.out::println);
             abb3.drawOptTelNet(7, 7);
-        }
-        else
+        } else
             System.out.println("computeing failed");
-
-        /* Das Programm funktioniert nur im debug mode...
-            in Eclipse etc. kann es normal ausgeführt werden.
-            Daher die vermutung, dass IDEA falsch optimiert
-         */
     }
 }
