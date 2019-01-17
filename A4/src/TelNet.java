@@ -112,7 +112,7 @@ public class TelNet {
             Daher die vermutung, dass IDEA falsch optimiert
          */
         doNetFromAbb3();
-        doRandomNet();
+        //doRandomNet();
     }
 
     private static void doRandomNet(){

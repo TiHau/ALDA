@@ -28,7 +28,7 @@ public class UnionFind {
         int size = 0;
 
         for (int aP : p) {
-            if (aP <= 0) {
+            if (aP < 0) {
                 size++;
             }
         }
