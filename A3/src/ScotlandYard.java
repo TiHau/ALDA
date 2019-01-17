@@ -60,8 +60,30 @@ public class ScotlandYard {
                     weight = 100;
             }
 
-            sy_graph.addEdge(first, second, weight);
-            sy_graph.addEdge(second, first, weight);
+            if(sy_graph.containsEdge(first, second)) {
+                if(sy_graph.getWeight(first, second) > weight){
+                    //update weight
+                    sy_graph.addEdge(first, second, weight);
+                }
+            }
+            else {
+                // insert new edge
+                sy_graph.addEdge(first, second, weight);
+            }
+
+            if(sy_graph.containsEdge(second, first)) {
+                if(sy_graph.getWeight(second, first) > weight){
+                    //update weight
+                    sy_graph.addEdge(second, first, weight);
+                }
+            }
+            else {
+                // insert new edge
+                sy_graph.addEdge(second, first, weight);
+            }
+
+
+
         }
 
         return sy_graph;
@@ -95,8 +117,8 @@ public class ScotlandYard {
 
         DirectedGraph<Integer> syGraph = getGraph();
 
-        Heuristic<Integer> syHeuristic = null; // Dijkstra
-        //Heuristic<Integer> syHeuristic = getHeuristic(); // A*
+        //Heuristic<Integer> syHeuristic = null; // Dijkstra
+        Heuristic<Integer> syHeuristic = getHeuristic(); // A*
 
         //System.out.println(syGraph.getWeight(78, 79));
         //System.out.println(syGraph.getWeight(65, 82));
@@ -126,11 +148,11 @@ public class ScotlandYard {
         //sySp.searchShortestPath(65,157); // 9.0
         //sySp.searchShortestPath(1,175); //25.0
 
-        sySp.searchShortestPath(1, 173); //22.0
+        //sySp.searchShortestPath(1, 173); //22.0
         // bei Heuristik-Faktor von 1/10 wird nicht der optimale Pfad produziert.
         // bei 1/30 funktioniert es.
 
-        System.out.println("Distance = " + sySp.getDistance());
+        //System.out.println("Distance = " + sySp.getDistance());
         List<Integer> sp = sySp.getShortestPath();
 
         int a = -1;
